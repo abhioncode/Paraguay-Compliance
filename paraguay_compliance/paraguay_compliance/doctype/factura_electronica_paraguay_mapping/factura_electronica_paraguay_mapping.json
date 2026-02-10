@@ -1,0 +1,185 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "section_break_target",
+  "target_path",
+  "target_data_type",
+  "required",
+  "column_break_target",
+  "default_value",
+  "transformer",
+  "section_break_source",
+  "source_mode",
+  "source_doctype",
+  "source_fieldname",
+  "column_break_source",
+  "source_docname",
+  "static_value",
+  "expression",
+  "section_break_loop",
+  "is_loop",
+  "loop_doctype",
+  "loop_table_fieldname",
+  "column_break_loop",
+  "loop_alias",
+  "loop_target_path"
+ ],
+ "fields": [
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "section_break_target",
+   "fieldtype": "Section Break",
+   "label": "Target"
+  },
+  {
+   "fieldname": "target_path",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Target JSON Path",
+   "reqd": 1
+  },
+  {
+   "default": "String",
+   "fieldname": "target_data_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Target Data Type",
+   "options": "String\nInt\nFloat\nCurrency\nDate\nDatetime\nCheck\nJSON"
+  },
+  {
+   "default": "0",
+   "fieldname": "required",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Required"
+  },
+  {
+   "fieldname": "column_break_target",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_value",
+   "fieldtype": "Small Text",
+   "label": "Default Value"
+  },
+  {
+   "default": "None",
+   "fieldname": "transformer",
+   "fieldtype": "Select",
+   "label": "Transformer",
+   "options": "None\nUppercase\nLowercase\nStrip\nRound 2\nDate ISO\nDatetime ISO"
+  },
+  {
+   "fieldname": "section_break_source",
+   "fieldtype": "Section Break",
+   "label": "Source"
+  },
+  {
+   "default": "DocField",
+   "fieldname": "source_mode",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Source Mode",
+   "options": "DocField\nStatic\nExpression"
+  },
+  {
+   "fieldname": "source_doctype",
+   "fieldtype": "Link",
+   "label": "Source DocType",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "source_fieldname",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Source Fieldname"
+  },
+  {
+   "fieldname": "column_break_source",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "source_docname",
+   "fieldtype": "Dynamic Link",
+   "label": "Source Docname",
+   "options": "source_doctype"
+  },
+  {
+   "fieldname": "static_value",
+   "fieldtype": "Small Text",
+   "label": "Static Value"
+  },
+  {
+   "fieldname": "expression",
+   "fieldtype": "Code",
+   "label": "Expression",
+   "options": "Python"
+  },
+  {
+   "fieldname": "section_break_loop",
+   "fieldtype": "Section Break",
+   "label": "Loop"
+  },
+  {
+   "default": "0",
+   "description": "Mark this row as a loop definition for child table rows.",
+   "fieldname": "is_loop",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Loop"
+  },
+  {
+   "fieldname": "loop_doctype",
+   "fieldtype": "Link",
+   "label": "Loop DocType",
+   "options": "DocType"
+  },
+  {
+   "description": "Child table fieldname on the source document. Example: items, taxes, payments.",
+   "fieldname": "loop_table_fieldname",
+   "fieldtype": "Data",
+   "label": "Loop Table Fieldname"
+  },
+  {
+   "fieldname": "column_break_loop",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "row",
+   "description": "Alias used in expressions for the current loop row.",
+   "fieldname": "loop_alias",
+   "fieldtype": "Data",
+   "label": "Loop Alias"
+  },
+  {
+   "description": "Array path for loop nodes. Example: items[] or condicion.entregas[].",
+   "fieldname": "loop_target_path",
+   "fieldtype": "Data",
+   "label": "Loop Target Path"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "module": "Paraguay Compliance",
+ "name": "Factura Electronica Paraguay Mapping",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
