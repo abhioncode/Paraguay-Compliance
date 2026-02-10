@@ -1,9 +1,9 @@
 [project]
 name = "paraguay_compliance"
 authors = [
-    { name = "Your Company", email = "admin@example.com"}
+    { name = "INDOPAR", email = "ashah@indopar.com.py"}
 ]
-description = "Paraguay VAT (IVA) and e-invoice compliance for ERPNext"
+description = "Custom module for handling Paraguay VAT (IVA) and e-invoicing"
 requires-python = ">=3.14"
 readme = "README.md"
 dynamic = ["version"]

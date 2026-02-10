@@ -1,14 +1,14 @@
 app_name = "paraguay_compliance"
 app_title = "Paraguay Compliance"
-app_publisher = "Your Company"
-app_description = "Paraguay VAT (IVA) and e-invoice compliance for ERPNext"
-app_email = "admin@example.com"
+app_publisher = "INDOPAR"
+app_description = "Custom module for handling Paraguay VAT (IVA) and e-invoicing"
+app_email = "ashah@indopar.com.py"
 app_license = "mit"
 
 # Apps
 # ------------------
 
-# required_apps = []
+required_apps = ["erpnext"]
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
@@ -249,4 +249,3 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-
