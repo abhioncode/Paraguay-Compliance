@@ -1,0 +1,547 @@
+{
+    "country_code": "py",
+    "name": "Plan de Cuentas Paraguayo",
+    "tree": {
+        "Activo": {
+            "root_type": "Asset",
+            "account_number": "1.0.0.0",
+            "Activo Corriente": {
+                "account_number": "1.1.0.0",
+                "Caja y Bancos": {
+                    "account_number": "1.1.1.0",
+                    "Caja General": {
+                        "account_type": "Cash",
+                        "account_number": "1.1.1.1"
+                    },
+                    "Caja Chica": {
+                        "account_type": "Cash",
+                        "account_number": "1.1.1.2"
+                    },
+                    "Bancos": {
+                        "account_type": "Bank",
+                        "account_number": "1.1.1.3"
+                    }
+                },
+                "Cuentas a Cobrar": {
+                    "account_number": "1.1.2.0",
+                    "Clientes": {
+                        "account_type": "Receivable",
+                        "account_number": "1.1.2.1"
+                    },
+                    "Documentos a Cobrar": {
+                        "account_type": "Receivable",
+                        "account_number": "1.1.2.2"
+                    },
+                    "Intereses por Cobrar": {
+                        "account_number": "1.1.2.3"
+                    },
+                    "(-) Prevision para Incobrables": {
+                        "account_number": "1.1.2.9"
+                    }
+                },
+                "Inventarios y Mercaderias": {
+                    "account_number": "1.1.3.0",
+                    "Mercaderias": {
+                        "account_type": "Stock",
+                        "account_number": "1.1.3.1"
+                    },
+                    "Materias Primas": {
+                        "account_type": "Stock",
+                        "account_number": "1.1.3.2"
+                    },
+                    "Productos en Proceso": {
+                        "account_type": "Stock",
+                        "account_number": "1.1.3.3"
+                    },
+                    "Productos Terminados": {
+                        "account_type": "Stock",
+                        "account_number": "1.1.3.4"
+                    }
+                },
+                "Otros Creditos": {
+                    "account_number": "1.1.4.0",
+                    "Anticipos a Proveedores": {
+                        "account_number": "1.1.4.1"
+                    },
+                    "Anticipos de Impuestos": {
+                        "account_number": "1.1.4.2"
+                    },
+                    "IVA - Credito Fiscal": {
+                        "account_type": "Tax",
+                        "account_number": "1.1.4.3"
+                    },
+                    "Prestamos al Personal": {
+                        "account_number": "1.1.4.4"
+                    },
+                    "Depositos en Garantia": {
+                        "account_number": "1.1.4.5"
+                    }
+                },
+                "Inversiones Temporales": {
+                    "account_number": "1.1.5.0",
+                    "Inversiones a Corto Plazo": {
+                        "account_number": "1.1.5.1"
+                    }
+                }
+            },
+            "Activo No Corriente": {
+                "account_number": "1.2.0.0",
+                "Bienes de Uso": {
+                    "account_number": "1.2.1.0",
+                    "Terrenos": {
+                        "account_type": "Fixed Asset",
+                        "account_number": "1.2.1.1"
+                    },
+                    "Edificios e Instalaciones": {
+                        "account_type": "Fixed Asset",
+                        "account_number": "1.2.1.2"
+                    },
+                    "(-) Depreciacion Acum. Edificios": {
+                        "account_type": "Accumulated Depreciation",
+                        "account_number": "1.2.1.3"
+                    },
+                    "Maquinarias y Equipos": {
+                        "account_type": "Fixed Asset",
+                        "account_number": "1.2.1.4"
+                    },
+                    "(-) Depreciacion Acum. Maquinarias": {
+                        "account_type": "Accumulated Depreciation",
+                        "account_number": "1.2.1.5"
+                    },
+                    "Muebles y Utiles": {
+                        "account_type": "Fixed Asset",
+                        "account_number": "1.2.1.6"
+                    },
+                    "(-) Depreciacion Acum. Muebles": {
+                        "account_type": "Accumulated Depreciation",
+                        "account_number": "1.2.1.7"
+                    },
+                    "Equipos de Informatica": {
+                        "account_type": "Fixed Asset",
+                        "account_number": "1.2.1.8"
+                    },
+                    "(-) Depreciacion Acum. Eq. Informatica": {
+                        "account_type": "Accumulated Depreciation",
+                        "account_number": "1.2.1.9"
+                    },
+                    "Vehiculos": {
+                        "account_type": "Fixed Asset",
+                        "account_number": "1.2.1.10"
+                    },
+                    "(-) Depreciacion Acum. Vehiculos": {
+                        "account_type": "Accumulated Depreciation",
+                        "account_number": "1.2.1.11"
+                    },
+                    "Obras en Curso": {
+                        "account_type": "Capital Work in Progress",
+                        "account_number": "1.2.1.12"
+                    }
+                },
+                "Activos Intangibles": {
+                    "account_number": "1.2.2.0",
+                    "Marcas y Patentes": {
+                        "account_number": "1.2.2.1"
+                    },
+                    "Software y Licencias": {
+                        "account_number": "1.2.2.2"
+                    },
+                    "(-) Amortizacion Acum. Intangibles": {
+                        "account_type": "Accumulated Depreciation",
+                        "account_number": "1.2.2.9"
+                    }
+                },
+                "Inversiones a Largo Plazo": {
+                    "account_number": "1.2.3.0",
+                    "Inversiones a Largo Plazo": {
+                        "account_number": "1.2.3.1"
+                    }
+                }
+            }
+        },
+        "Pasivo": {
+            "root_type": "Liability",
+            "account_number": "2.0.0.0",
+            "Pasivo Corriente": {
+                "account_number": "2.1.0.0",
+                "Deudas Comerciales": {
+                    "account_number": "2.1.1.0",
+                    "Proveedores": {
+                        "account_type": "Payable",
+                        "account_number": "2.1.1.1"
+                    },
+                    "Documentos a Pagar": {
+                        "account_type": "Payable",
+                        "account_number": "2.1.1.2"
+                    },
+                    "Anticipos de Clientes": {
+                        "account_number": "2.1.1.3"
+                    }
+                },
+                "Deudas Fiscales": {
+                    "account_number": "2.1.2.0",
+                    "IVA - Debito Fiscal": {
+                        "account_type": "Tax",
+                        "account_number": "2.1.2.1"
+                    },
+                    "Retenciones de IVA a Pagar": {
+                        "account_type": "Tax",
+                        "account_number": "2.1.2.2"
+                    },
+                    "IRE a Pagar": {
+                        "account_type": "Tax",
+                        "account_number": "2.1.2.3"
+                    },
+                    "IDU a Pagar": {
+                        "account_type": "Tax",
+                        "account_number": "2.1.2.4"
+                    },
+                    "IRP a Pagar": {
+                        "account_type": "Tax",
+                        "account_number": "2.1.2.5"
+                    },
+                    "Retenciones de Renta a Pagar": {
+                        "account_type": "Tax",
+                        "account_number": "2.1.2.6"
+                    }
+                },
+                "Deudas Sociales y Laborales": {
+                    "account_number": "2.1.3.0",
+                    "Sueldos y Jornales a Pagar": {
+                        "account_number": "2.1.3.1"
+                    },
+                    "Aguinaldo a Pagar": {
+                        "account_number": "2.1.3.2"
+                    },
+                    "Vacaciones a Pagar": {
+                        "account_number": "2.1.3.3"
+                    },
+                    "IPS Patronal a Pagar": {
+                        "account_number": "2.1.3.4"
+                    },
+                    "IPS Obrero a Pagar": {
+                        "account_number": "2.1.3.5"
+                    },
+                    "Bonificacion Familiar a Pagar": {
+                        "account_number": "2.1.3.6"
+                    }
+                },
+                "Deudas Financieras": {
+                    "account_number": "2.1.4.0",
+                    "Prestamos Bancarios a Corto Plazo": {
+                        "account_number": "2.1.4.1"
+                    },
+                    "Intereses a Pagar": {
+                        "account_number": "2.1.4.2"
+                    }
+                },
+                "Otras Deudas Corrientes": {
+                    "account_number": "2.1.5.0",
+                    "Dividendos a Pagar": {
+                        "account_number": "2.1.5.1"
+                    },
+                    "Provisiones Diversas": {
+                        "account_number": "2.1.5.2"
+                    },
+                    "Otras Cuentas por Pagar": {
+                        "account_number": "2.1.5.3"
+                    }
+                }
+            },
+            "Pasivo No Corriente": {
+                "account_number": "2.2.0.0",
+                "Prestamos Bancarios a Largo Plazo": {
+                    "account_number": "2.2.1.0"
+                },
+                "Otras Deudas a Largo Plazo": {
+                    "account_number": "2.2.2.0"
+                },
+                "Prevision para Indemnizaciones": {
+                    "account_number": "2.2.3.0"
+                }
+            }
+        },
+        "Patrimonio Neto": {
+            "root_type": "Equity",
+            "account_number": "3.0.0.0",
+            "Capital": {
+                "account_number": "3.1.0.0",
+                "Capital Social": {
+                    "account_type": "Equity",
+                    "account_number": "3.1.1.0"
+                },
+                "Aportes No Capitalizados": {
+                    "account_type": "Equity",
+                    "account_number": "3.1.2.0"
+                }
+            },
+            "Reservas": {
+                "account_number": "3.2.0.0",
+                "Reserva Legal": {
+                    "account_number": "3.2.1.0"
+                },
+                "Reserva Facultativa": {
+                    "account_number": "3.2.2.0"
+                },
+                "Reserva de Revaluo": {
+                    "account_number": "3.2.3.0"
+                }
+            },
+            "Resultados": {
+                "account_number": "3.3.0.0",
+                "Resultados Acumulados": {
+                    "account_number": "3.3.1.0"
+                },
+                "Resultado del Ejercicio": {
+                    "account_number": "3.3.2.0"
+                }
+            },
+            "Cuenta de Apertura": {
+                "account_type": "Temporary",
+                "account_number": "3.9.0.0"
+            }
+        },
+        "Ingresos": {
+            "root_type": "Income",
+            "account_number": "4.0.0.0",
+            "Ingresos Operativos": {
+                "account_number": "4.1.0.0",
+                "Ventas de Mercaderias": {
+                    "account_type": "Income Account",
+                    "account_number": "4.1.1.0"
+                },
+                "Ventas de Productos Terminados": {
+                    "account_type": "Income Account",
+                    "account_number": "4.1.2.0"
+                },
+                "Prestacion de Servicios": {
+                    "account_type": "Income Account",
+                    "account_number": "4.1.3.0"
+                },
+                "(-) Devoluciones sobre Ventas": {
+                    "account_type": "Income Account",
+                    "account_number": "4.1.4.0"
+                },
+                "(-) Descuentos sobre Ventas": {
+                    "account_type": "Income Account",
+                    "account_number": "4.1.5.0"
+                }
+            },
+            "Ingresos Financieros": {
+                "account_number": "4.2.0.0",
+                "Ingresos por Intereses": {
+                    "account_type": "Income Account",
+                    "account_number": "4.2.1.0"
+                },
+                "Diferencia de Cambio - Ganancia": {
+                    "account_type": "Income Account",
+                    "account_number": "4.2.2.0"
+                }
+            },
+            "Otros Ingresos": {
+                "account_number": "4.3.0.0",
+                "Ingresos por Alquileres": {
+                    "account_type": "Income Account",
+                    "account_number": "4.3.1.0"
+                },
+                "Ganancia por Venta de Bienes de Uso": {
+                    "account_type": "Income Account",
+                    "account_number": "4.3.2.0"
+                },
+                "Descuentos Obtenidos": {
+                    "account_type": "Income Account",
+                    "account_number": "4.3.3.0"
+                },
+                "Ingresos Extraordinarios": {
+                    "account_type": "Income Account",
+                    "account_number": "4.3.9.0"
+                }
+            }
+        },
+        "Egresos": {
+            "root_type": "Expense",
+            "account_number": "5.0.0.0",
+            "Costo de Ventas": {
+                "account_number": "5.1.0.0",
+                "Costo de Mercaderias Vendidas": {
+                    "account_type": "Cost of Goods Sold",
+                    "account_number": "5.1.1.0"
+                },
+                "Costo de Productos Vendidos": {
+                    "account_type": "Cost of Goods Sold",
+                    "account_number": "5.1.2.0"
+                },
+                "Costo de Servicios Prestados": {
+                    "account_type": "Cost of Goods Sold",
+                    "account_number": "5.1.3.0"
+                },
+                "Ajuste de Inventario": {
+                    "account_type": "Stock Adjustment",
+                    "account_number": "5.1.4.0"
+                },
+                "Gastos Incluidos en Valuacion": {
+                    "account_type": "Expenses Included In Valuation",
+                    "account_number": "5.1.5.0"
+                }
+            },
+            "Gastos de Administracion": {
+                "account_number": "5.2.0.0",
+                "Sueldos y Jornales - Administracion": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.1.0"
+                },
+                "Aguinaldo - Administracion": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.2.0"
+                },
+                "Vacaciones - Administracion": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.3.0"
+                },
+                "Aporte Patronal IPS - Administracion": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.4.0"
+                },
+                "Honorarios Profesionales": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.5.0"
+                },
+                "Alquileres - Administracion": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.6.0"
+                },
+                "Servicios Basicos (ANDE, ESSAP)": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.7.0"
+                },
+                "Utiles de Oficina": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.8.0"
+                },
+                "Depreciaciones": {
+                    "account_type": "Depreciation",
+                    "account_number": "5.2.9.0"
+                },
+                "Seguros": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.10.0"
+                },
+                "Mantenimiento y Reparaciones": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.11.0"
+                },
+                "Comunicacion e Internet": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.12.0"
+                },
+                "Gastos Legales y Notariales": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.13.0"
+                },
+                "Gastos Varios de Administracion": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.2.14.0"
+                }
+            },
+            "Gastos de Ventas": {
+                "account_number": "5.3.0.0",
+                "Sueldos y Jornales - Ventas": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.3.1.0"
+                },
+                "Aguinaldo - Ventas": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.3.2.0"
+                },
+                "Aporte Patronal IPS - Ventas": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.3.3.0"
+                },
+                "Comisiones sobre Ventas": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.3.4.0"
+                },
+                "Publicidad y Propaganda": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.3.5.0"
+                },
+                "Fletes y Acarreos": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.3.6.0"
+                },
+                "Gastos de Viaje y Viaticos": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.3.7.0"
+                },
+                "Gastos Varios de Ventas": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.3.8.0"
+                }
+            },
+            "Gastos Financieros": {
+                "account_number": "5.4.0.0",
+                "Intereses Pagados": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.4.1.0"
+                },
+                "Comisiones Bancarias": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.4.2.0"
+                },
+                "Diferencia de Cambio - Perdida": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.4.3.0"
+                },
+                "Impuesto a los Debitos Bancarios": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.4.4.0"
+                }
+            },
+            "Otros Egresos": {
+                "account_number": "5.5.0.0",
+                "Perdida por Venta de Bienes de Uso": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.5.1.0"
+                },
+                "Multas y Recargos": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.5.2.0"
+                },
+                "Donaciones": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.5.3.0"
+                },
+                "Incobrables": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.5.4.0"
+                },
+                "Gastos Extraordinarios": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.5.9.0"
+                }
+            },
+            "Impuestos": {
+                "account_number": "5.6.0.0",
+                "Impuesto a la Renta Empresarial (IRE)": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.6.1.0"
+                },
+                "Impuesto a los Dividendos (IDU)": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.6.2.0"
+                },
+                "Impuesto Inmobiliario": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.6.3.0"
+                },
+                "Tasas Municipales": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.6.4.0"
+                },
+                "Patente Comercial": {
+                    "account_type": "Expense Account",
+                    "account_number": "5.6.5.0"
+                }
+            }
+        }
+    }
+}

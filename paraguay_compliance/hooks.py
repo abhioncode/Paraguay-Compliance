@@ -24,6 +24,11 @@ required_apps = ["erpnext"]
 # Includes in <head>
 # ------------------
 
+# Fixtures
+# --------
+
+fixtures = ["Currency"]
+
 # include js, css files in header of desk.html
 # app_include_css = "/assets/paraguay_compliance/css/paraguay_compliance.css"
 # app_include_js = "/assets/paraguay_compliance/js/paraguay_compliance.js"
@@ -43,7 +48,7 @@ required_apps = ["erpnext"]
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {"Sales Invoice": "public/js/sales_invoice.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -86,7 +91,8 @@ required_apps = ["erpnext"]
 # ------------
 
 # before_install = "paraguay_compliance.install.before_install"
-# after_install = "paraguay_compliance.install.after_install"
+after_install = "paraguay_compliance.utils.install.run_setup"
+after_migrate = "paraguay_compliance.utils.install.run_setup"
 
 # Uninstallation
 # ------------
@@ -135,6 +141,9 @@ required_apps = ["erpnext"]
 doc_events = {
 	"Sales Invoice": {
 		"before_submit": "paraguay_compliance.paraguay.einvoice.sifen.send_sales_invoice_to_facturasend",
+	},
+	"Company": {
+		"on_update": "paraguay_compliance.paraguay.company_defaults.set_stock_defaults_for_paraguay_company",
 	}
 }
 
@@ -175,9 +184,10 @@ doc_events = {
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "paraguay_compliance.event.get_events"
-# }
+override_whitelisted_methods = {
+	"erpnext.accounts.doctype.account.chart_of_accounts.chart_of_accounts.get_chart": 		"paraguay_compliance.paraguay.chart_of_accounts.get_chart",
+	"erpnext.accounts.doctype.account.chart_of_accounts.chart_of_accounts.get_charts_for_country": 		"paraguay_compliance.paraguay.chart_of_accounts.get_charts_for_country",
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,

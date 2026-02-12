@@ -18,6 +18,7 @@ class FacturaElectronicaParaguay(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
+		check_status_url: DF.Data | None
 		naming_series_doctype: DF.Link | None
 		naming_series_options: DF.Text | None
 		sales_invoice_for_test: DF.Link | None

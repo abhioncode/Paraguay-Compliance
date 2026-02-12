@@ -1,0 +1,38 @@
+[
+  {
+    "doctype": "Currency",
+    "name": "GBP",
+    "currency_name": "GBP",
+    "enabled": 0
+  },
+  {
+    "doctype": "Currency",
+    "name": "AED",
+    "currency_name": "AED",
+    "enabled": 0
+  },
+  {
+    "doctype": "Currency",
+    "name": "CHF",
+    "currency_name": "CHF",
+    "enabled": 0
+  },
+  {
+    "doctype": "Currency",
+    "name": "JPY",
+    "currency_name": "JPY",
+    "enabled": 0
+  },
+  {
+    "doctype": "Currency",
+    "name": "INR",
+    "currency_name": "INR",
+    "enabled": 0
+  },
+  {
+    "doctype": "Currency",
+    "name": "AUD",
+    "currency_name": "AUD",
+    "enabled": 0
+  }
+]

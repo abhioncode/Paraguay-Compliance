@@ -4,14 +4,15 @@
  "creation": "2026-02-10 11:57:48.078159",
  "doctype": "DocType",
  "engine": "InnoDB",
- "field_order": [
-  "timbrado",
-  "start_date",
-  "section_break_hcjs",
-  "tenent_url",
-  "test_mode",
-  "column_break_pxxu",
-  "api_key",
+  "field_order": [
+   "timbrado",
+   "start_date",
+   "section_break_hcjs",
+   "tenent_url",
+   "check_status_url",
+   "test_mode",
+   "column_break_pxxu",
+   "api_key",
   "tab_break_naming",
   "section_break_naming",
   "naming_series_doctype",
@@ -51,6 +52,11 @@
    "fieldtype": "Data",
    "label": "Tenent URL",
    "reqd": 1
+  },
+  {
+   "fieldname": "check_status_url",
+   "fieldtype": "Data",
+   "label": "Check Status URL"
   },
   {
    "fieldname": "column_break_pxxu",
