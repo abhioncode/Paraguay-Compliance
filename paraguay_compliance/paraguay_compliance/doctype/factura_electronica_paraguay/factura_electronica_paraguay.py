@@ -19,10 +19,7 @@ class FacturaElectronicaParaguay(Document):
 		from frappe.types import DF
 
 		check_status_url: DF.Data | None
-		naming_series_doctype: DF.Link | None
-		naming_series_options: DF.Text | None
 		sales_invoice_for_test: DF.Link | None
-		pull_naming_series: DF.Button | None
 		start_date: DF.Date | None
 		tenent_url: DF.Data | None
 		test_mode: DF.Check
@@ -31,13 +28,7 @@ class FacturaElectronicaParaguay(Document):
 	# end: auto-generated types
 
 	def validate(self):
-		if not self.naming_series_doctype:
-			self.naming_series_doctype = "Sales Invoice"
-
-		# Keep core naming series in sync when options are changed in this settings page.
-		if self.has_value_changed("naming_series_options") or self.has_value_changed("naming_series_doctype"):
-			if self.naming_series_options:
-				_update_core_naming_series(self.naming_series_doctype, self.naming_series_options)
+		pass
 
 
 @frappe.whitelist()
@@ -59,35 +50,9 @@ def generate_test_payload(sales_invoice: str):
 
 def build_payload_from_sales_invoice(sales_invoice: str | Document) -> tuple[dict[str, Any], list[str]]:
 	"""Build mapped payload for a Sales Invoice using current settings."""
-	settings = frappe.get_single("Factura Electronica Paraguay")
+	settings = frappe.get_single("Paraguay Compliance Settings")
 	invoice = sales_invoice if isinstance(sales_invoice, Document) else frappe.get_doc("Sales Invoice", sales_invoice)
 	return _build_payload(settings, invoice)
-
-
-@frappe.whitelist()
-def get_core_naming_series_options(doctype: str = "Sales Invoice"):
-	dns = frappe.get_single("Document Naming Settings")
-	return dns.get_options(doctype) or ""
-
-
-@frappe.whitelist()
-def sync_core_naming_series_options(doctype: str, naming_series_options: str):
-	if not doctype:
-		frappe.throw("DocType is required.")
-	if not naming_series_options:
-		frappe.throw("Naming series options are required.")
-
-	_update_core_naming_series(doctype, naming_series_options)
-	return {"ok": True}
-
-
-def _update_core_naming_series(doctype: str, naming_series_options: str):
-	dns = frappe.get_single("Document Naming Settings")
-	dns.transaction_type = doctype
-	dns.naming_series_options = naming_series_options
-	dns.validate_set_series()
-	dns.check_duplicate()
-	dns.set_series_options_in_meta(doctype, naming_series_options)
 
 
 def _build_payload(settings: Document, invoice: Document) -> tuple[dict[str, Any], list[str]]:

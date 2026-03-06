@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "creation": "2026-03-06 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "voucher_type",
+  "timbrado_number",
+  "valid_from",
+  "valid_until",
+  "establishment",
+  "expedition_point",
+  "next_number",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "fieldname": "voucher_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Voucher Type",
+   "options": "\nFactura Venta\nComprobante Retención\nAutofactura\nNota de Crédito\nNota de Débito",
+   "reqd": 1
+  },
+  {
+   "fieldname": "timbrado_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Timbrado Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "valid_until",
+   "fieldtype": "Date",
+   "label": "Valid Until"
+  },
+  {
+   "default": "001",
+   "fieldname": "establishment",
+   "fieldtype": "Data",
+   "label": "Establishment"
+  },
+  {
+   "default": "001",
+   "fieldname": "expedition_point",
+   "fieldtype": "Data",
+   "label": "Expedition Point"
+  },
+  {
+   "default": "1",
+   "fieldname": "next_number",
+   "fieldtype": "Int",
+   "label": "Next Number"
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Active"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-03-06 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Paraguay Compliance",
+ "name": "Paraguay Timbrado",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

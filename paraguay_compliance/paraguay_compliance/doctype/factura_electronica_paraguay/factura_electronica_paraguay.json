@@ -4,21 +4,15 @@
  "creation": "2026-02-10 11:57:48.078159",
  "doctype": "DocType",
  "engine": "InnoDB",
-  "field_order": [
-   "timbrado",
-   "start_date",
-   "section_break_hcjs",
-   "tenent_url",
-   "check_status_url",
-   "test_mode",
-   "column_break_pxxu",
-   "api_key",
-  "tab_break_naming",
-  "section_break_naming",
-  "naming_series_doctype",
-  "pull_naming_series",
-  "column_break_naming",
-  "naming_series_options",
+ "field_order": [
+  "timbrado",
+  "start_date",
+  "section_break_hcjs",
+  "tenent_url",
+  "check_status_url",
+  "test_mode",
+  "column_break_pxxu",
+  "api_key",
   "section_break_mapping",
   "mapping_rows",
   "tab_break_testing",
@@ -72,39 +66,6 @@
    "fieldname": "test_mode",
    "fieldtype": "Check",
    "label": "Test Mode"
-  },
-  {
-   "fieldname": "tab_break_naming",
-   "fieldtype": "Tab Break",
-   "label": "Naming"
-  },
-  {
-   "fieldname": "section_break_naming",
-   "fieldtype": "Section Break",
-   "label": "Document Naming Sync"
-  },
-  {
-   "default": "Sales Invoice",
-   "fieldname": "naming_series_doctype",
-   "fieldtype": "Link",
-   "label": "Naming Series DocType",
-   "options": "DocType",
-   "reqd": 1
-  },
-  {
-   "fieldname": "pull_naming_series",
-   "fieldtype": "Button",
-   "label": "Load Naming Series From Core Settings"
-  },
-  {
-   "fieldname": "column_break_naming",
-   "fieldtype": "Column Break"
-  },
-  {
-   "description": "Same format as Document Naming Settings > Series List for this Transaction",
-   "fieldname": "naming_series_options",
-   "fieldtype": "Text",
-   "label": "Naming Series Options"
   },
   {
    "fieldname": "section_break_mapping",

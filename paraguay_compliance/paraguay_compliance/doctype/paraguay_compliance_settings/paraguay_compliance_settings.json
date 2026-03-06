@@ -1,0 +1,236 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-03-06 00:00:00",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_company",
+  "company",
+  "taxpayer_type",
+  "column_break_mmaq",
+  "ruc",
+  "dv",
+  "issuance_address",
+  "section_vat_mapping",
+  "vat_mapping",
+  "documents_tab",
+  "section_naming",
+  "naming_series_doctype",
+  "pull_naming_series",
+  "column_break_naming",
+  "naming_series_options",
+  "section_issuance_configuration",
+  "billing_regime",
+  "timbrado_entries",
+  "electronic_invoice_tab",
+  "section_api_middleware",
+  "api_provider",
+  "api_url",
+  "check_status_url",
+  "column_break_oykn",
+  "api_key",
+  "api_environment",
+  "section_payload_mapping",
+  "mapping_rows",
+  "withholdings_tab",
+  "section_withholdings",
+  "withholding_threshold"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_company",
+   "fieldtype": "Section Break",
+   "label": "Company"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ruc",
+   "fieldtype": "Data",
+   "label": "RUC",
+   "reqd": 1
+  },
+  {
+   "fieldname": "dv",
+   "fieldtype": "Data",
+   "label": "DV",
+   "reqd": 1
+  },
+  {
+   "fieldname": "taxpayer_type",
+   "fieldtype": "Select",
+   "label": "Taxpayer Type",
+   "options": "\nIRE General\nIRE SIMPLE\nIRE RESIMPLE\nIRP RSP\nIRP RGC\nMaquila\nEntidad P\u00fablica\nEntidad Sin Fines de Lucro"
+  },
+  {
+   "fieldname": "issuance_address",
+   "fieldtype": "Small Text",
+   "label": "Issuance Address"
+  },
+  {
+   "fieldname": "section_issuance_configuration",
+   "fieldtype": "Section Break",
+   "label": "Issuance Configuration"
+  },
+  {
+   "fieldname": "billing_regime",
+   "fieldtype": "Select",
+   "label": "Billing Regime",
+   "options": "\nImpresa\nSIFEN (Factura Electr\u00f3nica)"
+  },
+  {
+   "fieldname": "timbrado_entries",
+   "fieldtype": "Table",
+   "label": "Timbrado Entries",
+   "options": "Paraguay Timbrado"
+  },
+  {
+   "fieldname": "section_vat_mapping",
+   "fieldtype": "Section Break",
+   "label": "VAT Mapping"
+  },
+  {
+   "fieldname": "vat_mapping",
+   "fieldtype": "Table",
+   "label": "VAT Mapping",
+   "options": "Paraguay IVA Mapping"
+  },
+  {
+   "fieldname": "section_api_middleware",
+   "fieldtype": "Section Break",
+   "label": "API (Middleware)"
+  },
+  {
+   "fieldname": "api_provider",
+   "fieldtype": "Select",
+   "label": "API Provider",
+   "options": "\nNinguno\nFacturaSend\nFactPy\nCustom"
+  },
+  {
+   "fieldname": "api_url",
+   "fieldtype": "Data",
+   "label": "API URL"
+  },
+  {
+   "fieldname": "check_status_url",
+   "fieldtype": "Data",
+   "label": "Check Status URL"
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "API Key"
+  },
+  {
+   "fieldname": "api_environment",
+   "fieldtype": "Select",
+   "label": "API Environment",
+   "options": "\nTest\nProducci\u00f3n"
+  },
+  {
+   "fieldname": "section_payload_mapping",
+   "fieldtype": "Section Break",
+   "label": "Payload Mapping"
+  },
+  {
+   "fieldname": "mapping_rows",
+   "fieldtype": "Table",
+   "label": "Mapping Rows",
+   "options": "Factura Electronica Paraguay Mapping"
+  },
+  {
+   "fieldname": "section_naming",
+   "fieldtype": "Section Break",
+   "label": "Document Naming Sync"
+  },
+  {
+   "default": "Sales Invoice",
+   "fieldname": "naming_series_doctype",
+   "fieldtype": "Link",
+   "label": "Naming Series DocType",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "fieldname": "pull_naming_series",
+   "fieldtype": "Button",
+   "label": "Load Naming Series From Core Settings"
+  },
+  {
+   "fieldname": "column_break_naming",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Same format as Document Naming Settings > Series List for this Transaction",
+   "fieldname": "naming_series_options",
+   "fieldtype": "Text",
+   "label": "Naming Series Options"
+  },
+  {
+   "fieldname": "section_withholdings",
+   "fieldtype": "Section Break",
+   "label": "Withholdings"
+  },
+  {
+   "default": "650000",
+   "fieldname": "withholding_threshold",
+   "fieldtype": "Currency",
+   "label": "Withholding Threshold"
+  },
+  {
+   "fieldname": "column_break_mmaq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_oykn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "documents_tab",
+   "fieldtype": "Tab Break",
+   "label": "Documents"
+  },
+  {
+   "fieldname": "withholdings_tab",
+   "fieldtype": "Tab Break",
+   "label": "Withholdings"
+  },
+  {
+   "fieldname": "electronic_invoice_tab",
+   "fieldtype": "Tab Break",
+   "label": "Electronic Invoice"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-03-06 19:47:23.704890",
+ "modified_by": "Administrator",
+ "module": "Paraguay Compliance",
+ "name": "Paraguay Compliance Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

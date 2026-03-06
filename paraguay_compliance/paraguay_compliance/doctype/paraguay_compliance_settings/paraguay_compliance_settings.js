@@ -1,53 +1,170 @@
-frappe.ui.form.on("Factura Electronica Paraguay", {
-	refresh(frm) {
-		frm.add_custom_button("FacturaSend", () => {
-			frappe.confirm(
-				__("This will replace all current mapping rows with the FacturaSend starter template. Continue?"),
-				() => {
-					apply_facturasend_template(frm);
-				}
+frappe.ui.form.on("Paraguay Compliance Settings", {
+	onload(frm) {
+		if (!frm.doc.naming_series_doctype) {
+			frm.set_value("naming_series_doctype", "Sales Invoice");
+		}
+
+		if (!frm.doc.vat_mapping || frm.doc.vat_mapping.length === 0) {
+			frm.dashboard.set_headline_alert(
+				__("El mapeo de IVA está vacío. Use el botón 'Configurar IVA Estándar' para configurarlo automáticamente."),
+				"blue"
 			);
+		}
+	},
+
+	refresh(frm) {
+		frm.page.set_primary_action(__("Configurar IVA Estándar Paraguay"), () => {
+			if (!frm.doc.company) {
+				frappe.msgprint({
+					title: __("Dato requerido"),
+					indicator: "orange",
+					message: __("Seleccione la empresa en Paraguay Compliance Settings antes de continuar."),
+				});
+				return;
+			}
+
+			frappe.call({
+				method: "paraguay_compliance.setup.account_setup.configurar_iva_estandar",
+				args: {
+					company: frm.doc.company,
+				},
+				freeze: true,
+				freeze_message: __("Configurando cuentas, plantillas e IVA mapping..."),
+				callback: (r) => {
+					const data = r.message || {};
+					frm.reload_doc();
+
+					frappe.msgprint({
+						title: __("Resumen de configuración IVA"),
+						indicator: "green",
+						message: buildSummaryHtml(data),
+					});
+				},
+			});
 		});
 
-		frm.add_custom_button(__("Preview JSON"), () => {
-			run_test_payload(frm);
+		if (!frm.doc.naming_series_options && frm.doc.naming_series_doctype) {
+			loadCoreNamingSeries(frm);
+		}
+	},
+
+	pull_naming_series(frm) {
+		loadCoreNamingSeries(frm, true);
+	},
+
+	company(frm) {
+		if (!frm.doc.company) {
+			frm.set_value("ruc", "");
+			frm.set_value("dv", "");
+			return;
+		}
+
+		frappe.db.get_value("Company", frm.doc.company, "tax_id").then((r) => {
+			const taxId = (r && r.message && r.message.tax_id) || "";
+			const ruc = extractRucBase(taxId);
+			const dv = ruc ? String(calculateDvParaguay(ruc)) : "";
+
+			frm.set_value("ruc", ruc);
+			frm.set_value("dv", dv);
 		});
 	},
 
-	generate_test_payload(frm) {
-		run_test_payload(frm);
+	api_provider(frm) {
+		const provider = frm.doc.api_provider;
+		if (!provider) {
+			return;
+		}
+
+		if (provider === "FacturaSend") {
+			applyFacturaSendTemplate(frm);
+			return;
+		}
+
+		if (provider === "Ninguno" || provider === "Custom") {
+			clearMappingRows(frm);
+		}
 	},
 });
 
-function run_test_payload(frm) {
-	if (!frm.doc.sales_invoice_for_test) {
-		frappe.msgprint(__("Select a Sales Invoice in the Testing tab first."));
-		return;
-	}
-
+function loadCoreNamingSeries(frm, notify = false) {
 	frappe.call({
-		method: "paraguay_compliance.paraguay_compliance.doctype.factura_electronica_paraguay.factura_electronica_paraguay.generate_test_payload",
+		method: "paraguay_compliance.paraguay_compliance.doctype.paraguay_compliance_settings.paraguay_compliance_settings.get_core_naming_series_options",
 		args: {
-			sales_invoice: frm.doc.sales_invoice_for_test,
+			doctype: frm.doc.naming_series_doctype || "Sales Invoice",
 		},
-		freeze: true,
-		freeze_message: __("Generating test payload..."),
 		callback: (r) => {
-			if (!r.message) return;
-			frm.set_value("test_payload_json", r.message.payload_json || "{}");
-			if (r.message.errors && r.message.errors.length) {
-				frappe.msgprint({
-					title: __("Missing Required Mappings"),
-					indicator: "orange",
-					message: `<pre>${r.message.errors.join("\n")}</pre>`,
+			const value = (r.message || "").trim();
+			frm.set_value("naming_series_options", value);
+			if (notify) {
+				frappe.show_alert({
+					message: __("Naming series loaded from Document Naming Settings"),
+					indicator: "green",
 				});
 			}
 		},
 	});
 }
 
-function apply_facturasend_template(frm) {
-	const rows = get_facturasend_mapping_rows();
+function buildSummaryHtml(data) {
+	const created = Array.isArray(data.created) ? data.created : [];
+	const existing = Array.isArray(data.existing) ? data.existing : [];
+	const skipped = Array.isArray(data.skipped) ? data.skipped : [];
+
+	return [
+		renderSection(__("Creado"), created),
+		renderSection(__("Existente"), existing),
+		renderSection(__("Omitido"), skipped),
+	]
+		.filter(Boolean)
+		.join("<br>");
+}
+
+function renderSection(title, rows) {
+	if (!rows.length) return "";
+
+	const items = rows.map((row) => `<li>${frappe.utils.escape_html(String(row))}</li>`).join("");
+	return `<b>${frappe.utils.escape_html(title)}</b><ul style="margin-top: 6px;">${items}</ul>`;
+}
+
+function extractRucBase(taxId) {
+	let value = (taxId || "").toString().trim();
+	if (!value) return "";
+
+	if (value.includes("-")) {
+		value = value.split("-", 1)[0];
+	}
+
+	return value.replace(/[^0-9A-Za-z]/g, "");
+}
+
+function calculateDvParaguay(ruc) {
+	let total = 0;
+	let weight = 2;
+
+	for (let i = ruc.length - 1; i >= 0; i -= 1) {
+		const char = ruc[i];
+		const isDigit = /[0-9]/.test(char);
+		const val = isDigit ? parseInt(char, 10) : char.charCodeAt(0);
+		total += val * weight;
+		weight += 1;
+	}
+
+	const remainder = total % 11;
+	return remainder > 1 ? 11 - remainder : 0;
+}
+
+function clearMappingRows(frm) {
+	if (!Array.isArray(frm.doc.mapping_rows) || frm.doc.mapping_rows.length === 0) {
+		return;
+	}
+
+	frm.clear_table("mapping_rows");
+	frm.refresh_field("mapping_rows");
+	frm.dirty();
+}
+
+function applyFacturaSendTemplate(frm) {
+	const rows = getFacturaSendMappingRows();
 
 	frm.clear_table("mapping_rows");
 	rows.forEach((row) => {
@@ -62,7 +179,7 @@ function apply_facturasend_template(frm) {
 	});
 }
 
-function get_facturasend_mapping_rows() {
+function getFacturaSendMappingRows() {
 	return [
 		{ target_path: "tipoDocumento", source_mode: "Static", static_value: "1", target_data_type: "Int", required: 1 },
 		{ target_path: "establecimiento", source_mode: "Static", static_value: "1", target_data_type: "Int", required: 1 },
@@ -75,7 +192,6 @@ function get_facturasend_mapping_rows() {
 		{ target_path: "tipoTransaccion", source_mode: "Static", static_value: "1", target_data_type: "Int", required: 1 },
 		{ target_path: "tipoImpuesto", source_mode: "Static", static_value: "1", target_data_type: "Int", required: 1 },
 		{ target_path: "moneda", source_mode: "DocField", source_doctype: "Sales Invoice", source_fieldname: "currency", target_data_type: "String", required: 1 },
-
 		{ target_path: "cliente.contribuyente", source_mode: "Static", static_value: "1", target_data_type: "Check", required: 1 },
 		{ target_path: "cliente.ruc", source_mode: "Expression", expression: "customer.tax_id", target_data_type: "String", required: 1 },
 		{ target_path: "cliente.razonSocial", source_mode: "DocField", source_doctype: "Sales Invoice", source_fieldname: "customer_name", target_data_type: "String", required: 1 },
@@ -98,20 +214,16 @@ function get_facturasend_mapping_rows() {
 		{ target_path: "cliente.celular", source_mode: "Expression", expression: "customer.mobile_no", target_data_type: "String" },
 		{ target_path: "cliente.email", source_mode: "Expression", expression: "customer.email_id", target_data_type: "String" },
 		{ target_path: "cliente.codigo", source_mode: "DocField", source_doctype: "Sales Invoice", source_fieldname: "customer", target_data_type: "String" },
-
 		{ target_path: "usuario.documentoTipo", source_mode: "Expression", expression: "sales_person.pyg_documento_tipo", target_data_type: "Int" },
 		{ target_path: "usuario.documentoNumero", source_mode: "Expression", expression: "sales_person.pyg_documento_numero", target_data_type: "String" },
 		{ target_path: "usuario.nombre", source_mode: "Expression", expression: "sales_person.full_name", target_data_type: "String" },
 		{ target_path: "usuario.cargo", source_mode: "Expression", expression: "sales_person.designation", target_data_type: "String" },
-
 		{ target_path: "factura.presencia", source_mode: "Static", static_value: "1", target_data_type: "Int" },
-
 		{ target_path: "condicion.tipo", source_mode: "Expression", expression: "invoice_condition_type", target_data_type: "Int", default_value: "1" },
 		{ target_path: "condicion.credito.tipo", source_mode: "Expression", expression: "credit_info.tipo", target_data_type: "Int" },
 		{ target_path: "condicion.credito.plazo", source_mode: "Expression", expression: "credit_info.plazo", target_data_type: "String" },
 		{ target_path: "condicion.credito.cuotas", source_mode: "Expression", expression: "credit_info.cuotas", target_data_type: "Int" },
 		{ target_path: "condicion.credito.montoEntrega", source_mode: "Expression", expression: "credit_info.monto_entrega", target_data_type: "Currency" },
-
 		{ is_loop: 1, loop_doctype: "Sales Invoice Payment", loop_table_fieldname: "payments", loop_alias: "payment", loop_target_path: "condicion.entregas[]", target_path: "condicion.entregas[]", source_mode: "Static", static_value: "[]", target_data_type: "JSON" },
 		{ target_path: "condicion.entregas[].tipo", source_mode: "Expression", expression: "payment.tipo_pago_facturasend", target_data_type: "Int" },
 		{ target_path: "condicion.entregas[].monto", source_mode: "Expression", expression: "payment.amount", target_data_type: "Currency" },
@@ -128,12 +240,10 @@ function get_facturasend_mapping_rows() {
 		{ target_path: "condicion.entregas[].infoTarjeta.codigoAutorizacion", source_mode: "Expression", expression: "payment.reference_no", target_data_type: "String" },
 		{ target_path: "condicion.entregas[].infoCheque.numeroCheque", source_mode: "Expression", expression: "payment.reference_no", target_data_type: "String" },
 		{ target_path: "condicion.entregas[].infoCheque.banco", source_mode: "Expression", expression: "payment.mode_of_payment", target_data_type: "String" },
-
 		{ is_loop: 1, loop_doctype: "Payment Schedule", loop_table_fieldname: "payment_schedule", loop_alias: "cuota", loop_target_path: "condicion.credito.infoCuotas[]", target_path: "condicion.credito.infoCuotas[]", source_mode: "Static", static_value: "[]", target_data_type: "JSON" },
 		{ target_path: "condicion.credito.infoCuotas[].moneda", source_mode: "DocField", source_doctype: "Sales Invoice", source_fieldname: "currency", target_data_type: "String" },
 		{ target_path: "condicion.credito.infoCuotas[].monto", source_mode: "Expression", expression: "cuota.payment_amount", target_data_type: "Currency" },
 		{ target_path: "condicion.credito.infoCuotas[].vencimiento", source_mode: "Expression", expression: "cuota.due_date", target_data_type: "Date" },
-
 		{ is_loop: 1, loop_doctype: "Sales Invoice Item", loop_table_fieldname: "items", loop_alias: "item", loop_target_path: "items[]", target_path: "items[]", source_mode: "Static", static_value: "[]", target_data_type: "JSON", required: 1 },
 		{ target_path: "items[].codigo", source_mode: "Expression", expression: "item.item_code", target_data_type: "String", required: 1 },
 		{ target_path: "items[].descripcion", source_mode: "Expression", expression: "item.description", target_data_type: "String", required: 1 },
@@ -150,6 +260,6 @@ function get_facturasend_mapping_rows() {
 		{ target_path: "items[].vencimiento", source_mode: "Expression", expression: "item.pyg_batch_expiry", target_data_type: "Date" },
 		{ target_path: "items[].numeroSerie", source_mode: "Expression", expression: "item.serial_no", target_data_type: "String" },
 		{ target_path: "items[].numeroPedido", source_mode: "Expression", expression: "item.sales_order", target_data_type: "String" },
-		{ target_path: "items[].numeroSeguimiento", source_mode: "Expression", expression: "item.delivery_note", target_data_type: "String" }
+		{ target_path: "items[].numeroSeguimiento", source_mode: "Expression", expression: "item.delivery_note", target_data_type: "String" },
 	];
 }

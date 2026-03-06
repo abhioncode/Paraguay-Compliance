@@ -1,0 +1,40 @@
+{
+ "app": "paraguay_compliance",
+ "charts": [],
+ "content": "[{\"id\":\"pc-header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Paraguay Compliance</b></span>\",\"col\":12}},{\"id\":\"pc-shortcut-settings\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Paraguay Compliance Settings\",\"col\":4}}]",
+ "creation": "2026-03-06 00:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "setting",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Paraguay Compliance",
+ "links": [],
+ "modified": "2026-03-06 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Paraguay Compliance",
+ "name": "Paraguay Compliance",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "restrict_to_domain": "",
+ "roles": [],
+ "sequence_id": 20.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "Form",
+   "label": "Paraguay Compliance Settings",
+   "link_to": "Paraguay Compliance Settings",
+   "type": "DocType"
+  }
+ ],
+ "title": "Paraguay Compliance",
+ "type": "Workspace"
+}
+

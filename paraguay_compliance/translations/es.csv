@@ -1,0 +1,21 @@
+Company,Empresa
+Taxpayer Type,Tipo Contribuyente
+Issuance Address,Domicilio Emision
+Issuance Configuration,Configuracion de Emision
+Billing Regime,Regimen Facturacion
+Timbrado Entries,Timbrados
+VAT Mapping,Mapeo de IVA
+API Environment,API Ambiente
+Withholdings,Retenciones
+Withholding Threshold,Umbral Retencion
+Documents,Documentos
+Electronic Invoice,Factura Electronica
+Voucher Type,Tipo Comprobante
+Timbrado Number,Numero Timbrado
+Valid From,Fecha Inicio Vigencia
+Valid Until,Fecha Vencimiento
+Expedition Point,Punto Expedicion
+Next Number,Proximo Numero
+Active,Activo
+Government Rate,Gobierno Rate
+Description,Descripcion

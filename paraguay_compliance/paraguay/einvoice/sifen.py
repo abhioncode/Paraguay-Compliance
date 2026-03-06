@@ -4,7 +4,6 @@ from typing import Any
 
 import frappe
 from frappe.integrations.utils import create_request_log, make_get_request, make_post_request
-from frappe.utils import cint
 
 from paraguay_compliance.paraguay_compliance.doctype.factura_electronica_paraguay.factura_electronica_paraguay import (
 	build_payload_from_sales_invoice,
@@ -17,14 +16,16 @@ def send_sales_invoice_to_facturasend(doc, method=None):
 	Build payload from mapping config and send to configured REST endpoint.
 	Blocks submission if mapping or API call fails.
 	"""
-	settings = frappe.get_single("Factura Electronica Paraguay")
+	settings = frappe.get_single("Paraguay Compliance Settings")
+	_validate_facturasend_provider(settings)
 	payload, errors = build_payload_from_sales_invoice(doc)
+	_apply_timbrado_defaults(settings, payload)
 
-	if cint(settings.test_mode):
+	if _is_test_mode(settings):
 		payload_json = frappe.as_json(payload, indent=2)
 		if errors:
 			frappe.msgprint(
-				title="Factura Electronica Paraguay (Test Mode)",
+				title="Paraguay Compliance Settings (Test Mode)",
 				indicator="orange",
 				message=(
 					"<p>Payload generated with missing required mappings:</p>"
@@ -34,21 +35,21 @@ def send_sales_invoice_to_facturasend(doc, method=None):
 			)
 		else:
 			frappe.msgprint(
-				title="Factura Electronica Paraguay (Test Mode)",
+				title="Paraguay Compliance Settings (Test Mode)",
 				indicator="blue",
 				message=f"<p>Payload preview (API call skipped):</p><pre>{payload_json}</pre>",
 			)
 		return
 
-	if not settings.tenent_url:
-		frappe.throw("Factura Electronica Paraguay: Tenent URL is required when Test Mode is disabled.")
+	if not settings.api_url:
+		frappe.throw("Paraguay Compliance Settings: API URL is required when API Ambiente is Producción.")
 
 	if not settings.api_key:
-		frappe.throw("Factura Electronica Paraguay: API Key is required when Test Mode is disabled.")
+		frappe.throw("Paraguay Compliance Settings: API Key is required when API Ambiente is Producción.")
 
 	if errors:
 		frappe.throw(
-			"Factura Electronica Paraguay payload validation failed:\n" + "\n".join(f"- {err}" for err in errors)
+			"Paraguay Compliance payload validation failed:\n" + "\n".join(f"- {err}" for err in errors)
 		)
 
 	request_body = [payload]
@@ -58,7 +59,7 @@ def send_sales_invoice_to_facturasend(doc, method=None):
 	}
 
 	try:
-		response = make_post_request(settings.tenent_url, headers=headers, json=request_body)
+		response = make_post_request(settings.api_url, headers=headers, json=request_body)
 		_apply_response_fields(doc, response)
 		create_request_log(
 			data=request_body,
@@ -122,11 +123,12 @@ def check_sales_invoice_status(sales_invoice: str):
 	if not doc.get("pyg_cdc"):
 		frappe.throw("Sales Invoice has no CDC. Submit to FacturaSend first.")
 
-	settings = frappe.get_single("Factura Electronica Paraguay")
+	settings = frappe.get_single("Paraguay Compliance Settings")
+	_validate_facturasend_provider(settings)
 	if not settings.check_status_url:
-		frappe.throw("Factura Electronica Paraguay: Check Status URL is required.")
+		frappe.throw("Paraguay Compliance Settings: Check Status URL is required.")
 	if not settings.api_key:
-		frappe.throw("Factura Electronica Paraguay: API Key is required.")
+		frappe.throw("Paraguay Compliance Settings: API Key is required.")
 
 	url = _build_status_url(settings.check_status_url, doc.pyg_cdc)
 	headers = {"Authorization": f"Bearer {settings.api_key}"}
@@ -175,3 +177,27 @@ def _build_status_url(base_url: str, cdc: str) -> str:
 	if base_url.endswith("/"):
 		return f"{base_url}{cdc}"
 	return f"{base_url}/{cdc}"
+
+
+def _is_test_mode(settings) -> bool:
+	return (settings.get("api_environment") or "").strip().lower() == "test"
+
+
+def _validate_facturasend_provider(settings):
+	if (settings.get("api_provider") or "").strip() != "FacturaSend":
+		frappe.throw("Paraguay Compliance Settings: API Provider must be 'FacturaSend' for this operation.")
+
+
+def _apply_timbrado_defaults(settings, payload: dict[str, Any]):
+	timbrado_row = settings.get_active_timbrado("Factura Venta")
+	if not timbrado_row:
+		return
+
+	if timbrado_row.timbrado_number and not payload.get("timbrado"):
+		payload["timbrado"] = str(timbrado_row.timbrado_number)
+
+	if timbrado_row.establishment and not payload.get("establecimiento"):
+		payload["establecimiento"] = str(timbrado_row.establishment)
+
+	if timbrado_row.expedition_point and not payload.get("punto"):
+		payload["punto"] = str(timbrado_row.expedition_point)

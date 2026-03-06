@@ -11,15 +11,14 @@ app_license = "mit"
 required_apps = ["erpnext"]
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "paraguay_compliance",
-# 		"logo": "/assets/paraguay_compliance/logo.png",
-# 		"title": "Paraguay Compliance",
-# 		"route": "/paraguay_compliance",
-# 		"has_permission": "paraguay_compliance.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "paraguay_compliance",
+		"logo": "/assets/paraguay_compliance/logo.svg",
+		"title": "Paraguay Compliance",
+		"route": "/app/paraguay-compliance-settings",
+	}
+]
 
 # Includes in <head>
 # ------------------
