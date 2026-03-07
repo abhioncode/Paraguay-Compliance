@@ -5,9 +5,7 @@ from typing import Any
 import frappe
 from frappe.integrations.utils import create_request_log, make_get_request, make_post_request
 
-from paraguay_compliance.paraguay_compliance.doctype.factura_electronica_paraguay.factura_electronica_paraguay import (
-	build_payload_from_sales_invoice,
-)
+from paraguay_compliance.paraguay.einvoice.mapper import build_payload_from_sales_invoice
 
 
 def send_sales_invoice_to_facturasend(doc, method=None):

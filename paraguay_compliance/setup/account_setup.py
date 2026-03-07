@@ -1,6 +1,5 @@
 import frappe
 from frappe import _
-from frappe.exceptions import DoesNotExistError
 
 
 ACCOUNTS = [
@@ -72,11 +71,13 @@ def configurar_iva_estandar(company):
 
 
 def _get_existing_account_doc(account_name: str, company: str):
-	"""Required pattern: use frappe.get_doc('Account', {'account_name': name, 'company': company})."""
-	try:
-		return frappe.get_doc("Account", {"account_name": account_name, "company": company})
-	except DoesNotExistError:
+	"""Return account doc if exists without emitting not-found exceptions/messages."""
+	account_name_full = frappe.db.get_value(
+		"Account", {"account_name": account_name, "company": company}, "name"
+	)
+	if not account_name_full:
 		return None
+	return frappe.get_doc("Account", account_name_full)
 
 
 def _resolve_parent_account(company: str, root_type: str, parent_account_name: str):
@@ -144,22 +145,22 @@ def _create_sales_templates(company: str, accounts_by_base_name: dict, summary: 
 			summary["skipped"].append(f"Plantilla de ventas omitida (sin cuenta): {template_title}")
 			continue
 
-			doc = frappe.get_doc(
-				{
-					"doctype": "Sales Taxes and Charges Template",
-					"title": template_title,
-					"company": company,
-					"taxes": [
-						{
-							"charge_type": charge_type,
-							"account_head": account_head,
-							"rate": rate,
-							"description": template_title,
-							"included_in_print_rate": 1,
-						}
-					],
-				}
-			).insert(ignore_permissions=True)
+		doc = frappe.get_doc(
+			{
+				"doctype": "Sales Taxes and Charges Template",
+				"title": template_title,
+				"company": company,
+				"taxes": [
+					{
+						"charge_type": charge_type,
+						"account_head": account_head,
+						"rate": rate,
+						"description": template_title,
+						"included_in_print_rate": 1,
+					}
+				],
+			}
+		).insert(ignore_permissions=True)
 		summary["created"].append(f"Plantilla de ventas: {doc.name}")
 
 
@@ -186,24 +187,24 @@ def _create_purchase_templates(company: str, accounts_by_base_name: dict, summar
 			summary["skipped"].append(f"Plantilla de compras omitida (sin cuenta): {template_title}")
 			continue
 
-			doc = frappe.get_doc(
-				{
-					"doctype": "Purchase Taxes and Charges Template",
-					"title": template_title,
-					"company": company,
-					"taxes": [
-						{
-							"charge_type": charge_type,
-							"account_head": account_head,
-							"rate": rate,
-							"description": template_title,
-							"category": "Total",
-							"add_deduct_tax": "Add",
-							"included_in_print_rate": 1,
-						}
-					],
-				}
-			).insert(ignore_permissions=True)
+		doc = frappe.get_doc(
+			{
+				"doctype": "Purchase Taxes and Charges Template",
+				"title": template_title,
+				"company": company,
+				"taxes": [
+					{
+						"charge_type": charge_type,
+						"account_head": account_head,
+						"rate": rate,
+						"description": template_title,
+						"category": "Total",
+						"add_deduct_tax": "Add",
+						"included_in_print_rate": 1,
+					}
+				],
+			}
+		).insert(ignore_permissions=True)
 		summary["created"].append(f"Plantilla de compras: {doc.name}")
 
 

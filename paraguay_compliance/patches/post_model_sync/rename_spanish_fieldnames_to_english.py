@@ -15,7 +15,7 @@ def execute():
 	}
 
 	for old_field, new_field in _single_field_map.items():
-		old_value = frappe.db.get_single_value(doctype, old_field)
+		old_value = _get_single_value_raw(doctype, old_field)
 		new_value = frappe.db.get_single_value(doctype, new_field)
 		if old_value and not new_value:
 			frappe.db.set_single_value(doctype, new_field, old_value)
@@ -62,3 +62,16 @@ def _copy_child_column(doctype: str, old_field: str, new_field: str):
 		where `{old_field}` is not null
 		"""
 	)
+
+
+def _get_single_value_raw(doctype: str, fieldname: str):
+	value = frappe.db.sql(
+		"""
+		select value from `tabSingles`
+		where doctype=%s and field=%s
+		limit 1
+		""",
+		(doctype, fieldname),
+		as_list=True,
+	)
+	return value[0][0] if value else None
